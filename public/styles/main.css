@@ -1,19 +1,89 @@
 /**
 
   1. General
-
+  2. Page specific
+    2a. bomb.html
 */
 
 /***************
-
-GENERAL
-
+1. General
 ***************/
 
+*, *::before, *::after {
+  box-sizing: border-box;
+  padding: 0;
+}
+
+html {
+  font-family: sans-serif;
+  font-size: 20px;
+}
+
+body {
+  margin: 0 auto;
+}
+
 h1 {
-  color: red;
+
 }
 
 p {
-  font-style: italic;
+
+}
+
+/***************
+2. Page specific
+***************/
+
+/********  2a. bomb.html  ********/
+
+.bomb--container {
+  background: black;
+}
+
+.hud--container {
+  height: 25vh;
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  align-items: center;
+  background-color: #eee;
+  font-size: 3em;
+}
+
+.timer--container {
+  width: 66.7%;
+  border-right: 3px solid #666;
+}
+
+.attempts--container {
+  width: 33.3%;
+}
+
+.keypad--container {
+  height: 75vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.keypad--container button {
+  border-radius: 5%;
+  background-color: #e7e7e7;
+  height: 100%;
+  width: 100%;
+  font-size: 2.5em;
+}
+
+.button--pressed {
+  border: 3px solid red;
+}
+
+.danger {
+  color: red;
+}
+
+.keypad--row {
+  height: 25%;
+  display: flex;
+  justify-content: space-between;
 }

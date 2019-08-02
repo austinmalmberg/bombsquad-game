@@ -1,20 +1,28 @@
 const { ipcRenderer } = require('electron');
+const { formatTime } = require('./scripts/helpers');
+
+ipcRenderer.send('level-parameter-request', {});
 
 let startBtn = document.getElementById('btn-start');
 startBtn.onclick = beginMission;
 
 function beginMission() {
-  ipcRenderer.send('start-mission-request', {});
+  document.location = "bomb.html";
 }
 
-ipcRenderer.send('bomb-parameters-request', {});
+// ROUTING
+
+ipcRenderer.on('level-parameter-response', displayLevelParams);
 
 
-ipcRenderer.on('bomb-parameters-response', (e, res) => {
-  document.getElementById('initial-time').innerText = res.time;
-  document.getElementById('initial-attempts').innerText = res.attempts;
-});
+// ROUTING FUNCTIONS
 
-ipcRenderer.on('start-mission-response', (e, res) => {
-  console.log(`start-mission-response received.`);
-});
+function displayLevelParams(event, res) {
+
+  if (res.briefing) {
+    document.getElementById('briefing').innerText = res.briefing;
+  } else {
+    document.getElementById('initial-time').innerText = formatTime(res.time);
+    document.getElementById('initial-attempts').innerText = res.attempts;
+  }
+}

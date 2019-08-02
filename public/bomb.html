@@ -2,17 +2,43 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="styles/main.css">
     <title>Bomb</title>
   </head>
   <body>
-    <section class="section--timer">
-      <p class="timer">00:00:00</p>
-    </section>
-    <section class="section--attempts">
-      <p class="attempts">0</p>
-    </section>
-    <section class="section--keypad">
-      <p>A keypad will go here</p>
-    </section>
+    <div class="bomb--container">
+      <div class="hud--container">
+        <div class="timer--container">
+          <p class="timer" id="timer">00:00:00</p>
+        </div>
+        <div class="attempts--container">
+          <p id="attempts">0</p>
+        </div>
+      </div>
+      <div class="keypad--container">
+        <div class="keypad--row">
+          <button type="button" class="keypad--button" id="button1" name="button1" value="1">1</button>
+          <button type="button" class="keypad--button" id="button2" name="button2" value="2">2</button>
+          <button type="button" class="keypad--button" id="button3" name="button3" value="3">3</button>
+        </div>
+        <div class="keypad--row">
+          <button type="button" class="keypad--button" id="button4" name="button4" value="4">4</button>
+          <button type="button" class="keypad--button" id="button5" name="button5" value="5">5</button>
+          <button type="button" class="keypad--button" id="button6" name="button6" value="6">6</button>
+        </div>
+        <div class="keypad--row">
+          <button type="button" class="keypad--button" id="button7" name="button7" value="7">7</button>
+          <button type="button" class="keypad--button" id="button8" name="button8" value="8">8</button>
+          <button type="button" class="keypad--button" id="button9" name="button9" value="9">9</button>
+        </div>
+        <div class="keypad--row">
+          <button type="button" class="keypad--button" id="button-star" name="button-star" value="*">*</button>
+          <button type="button" class="keypad--button" id="button0" name="button0" value="0">0</button>
+          <button type="button" class="keypad--button" id="button-pound" name="button-pound" value="#">#</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="scripts/bomb.js" charset="utf-8"></script>
   </body>
 </html>
