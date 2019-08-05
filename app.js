@@ -1,11 +1,11 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
-const { getLevelParams } = require('./scripts/levels');
+const Session = require('./scripts/session');
 
 const WINDOW_WIDTH = 660;
 const WINDOW_HEIGHT = 732;
 
 let mainWindow;
-let level;
+let session;
 
 // ROUTING
 
@@ -13,9 +13,18 @@ app.on('ready', initApp);
 app.on('window-all-closed', quitApp);
 app.on('activate', activateApp);
 
-ipcMain.on('select-level-request', selectLevel)
-ipcMain.on('level-parameter-request', sendLevelInfo);
+// index.js
+ipcMain.on('new-session-request', createSession);
+
+// level-selector.js
+ipcMain.on('set-level-request', setLevel)
+
+// briefing.js
+ipcMain.on('level-info-request', sendLevelInfo);
+
+// bomb.js
 ipcMain.on('mission-start-request', beginMission);
+ipcMain.on('attempt-request', handleAttempt);
 
 // ROUTING FUNCTIONS
 
@@ -33,12 +42,12 @@ function initApp() {
 
   mainWindow.loadFile('public/index.html');
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
+  mainWindow.on('closed', () => mainWindow = null);
 }
 
 function quitApp() {
+
+  session = null;
 
   if (process.platform !== 'darwin') {
     app.quit();
@@ -52,15 +61,62 @@ function activateApp() {
   }
 }
 
-function selectLevel(event, req) {
-  level = req.level;
-  event.reply('select-level-response', { status: 200 });
+function createSession(event, req) {
+  session = new Session();
+
+  event.reply('new-session-response', { status: 200 });
+}
+
+function setLevel(event, req) {
+  session.currLevel = req.level;
+
+  event.reply('set-level-response', { status: 200 });
 }
 
 function sendLevelInfo(event, req) {
-  event.reply('level-parameter-response', getLevelParams(level));
+
+  event.reply('level-info-response', {
+    status: 200,
+    level: session.getLevelInfo()
+  });
 }
 
 function beginMission(event, req) {
-  event.reply('mission-start-response', { bomb: getLevelParams(level), code: "1234" });
+  session.beginLevel();
+
+  let levelInfo = session.getLevelInfo();
+
+  // send bomb detonation when timer is up
+  setTimeout(detonateBomb, levelInfo.bomb.detonationTime - Date.now());
+
+  event.reply('mission-start-response', {
+    status: 200,
+    level: levelInfo
+  });
+}
+
+function handleAttempt(event, req) {
+
+  session.handleAttempt({
+    time: Date.now(),
+    code: req.code
+  });
+
+  event.reply('attempt-response', {
+    status: 200,
+    level: session.getLevelInfo()
+  });
+}
+
+function detonateBomb() {
+
+  session.handleAttempt({
+    time: Date.now(),
+    code: '____'
+  });
+
+  event.reply('attempt-response', {
+    status: 200,
+    level: session.getLevelInfo()
+  });
 }

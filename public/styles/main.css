@@ -38,7 +38,7 @@ p {
 /********  2a. bomb.html  ********/
 
 .bomb--container {
-  background: black;
+  background-color: black;
 }
 
 .hud--container {
@@ -68,22 +68,33 @@ p {
 
 .keypad--container button {
   border-radius: 5%;
-  background-color: #e7e7e7;
-  height: 100%;
   width: 100%;
+  background-color: #e7e7e7;
   font-size: 2.5em;
+}
+
+.keypad--row {
+  height: 25%;
+  display: flex;
+  justify-content: space-around;
 }
 
 .button--pressed {
   border: 3px solid red;
 }
 
-.danger {
+/* button:disabled {
   color: red;
+} */
+
+.in--position {
+  color: blue;
 }
 
-.keypad--row {
-  height: 25%;
-  display: flex;
-  justify-content: space-between;
+.in--code {
+  color: green;
+}
+
+.danger {
+  color: red;
 }

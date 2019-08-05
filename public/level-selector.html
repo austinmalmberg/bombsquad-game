@@ -5,9 +5,22 @@
     <title>Select Level</title>
   </head>
   <body>
-    <h1>Select Level</h1>
-    <p>A level selector will go here.</p>
+    <!-- replace with vertical slider -->
+    <div class="slider--container">
+      <h1>Select Level</h1>
+      <input type="range" min="1" max="20" name="level--slider" class="slider" id="level--slider" value="1" oninput="updateSliderOutput(this.value)">
+      <p id="slider--display"></p>
+    </div>
+    <button type="button" class="submit--button" id="level--submit--button" name="level--submit--button" value="1">Go</button>
   </body>
 
+  <script type="text/javascript">
+    function updateSliderOutput(level) {
+      let sliderDisplay = document.getElementById('slider--display');
+      sliderDisplay.innerText = level;
+    }
+
+    updateSliderOutput(document.getElementById('level--slider').value);
+  </script>
   <script src="scripts/level-selector.js" charset="utf-8"></script>
 </html>

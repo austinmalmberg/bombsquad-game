@@ -1,28 +1,28 @@
 const { ipcRenderer } = require('electron');
 const { formatTime } = require('./scripts/helpers');
 
-ipcRenderer.send('level-parameter-request', {});
-
 let startBtn = document.getElementById('btn-start');
-startBtn.onclick = beginMission;
+startBtn.onclick = () => document.location = "bomb.html";   // begin mission
 
-function beginMission() {
-  document.location = "bomb.html";
-}
+ipcRenderer.send('level-info-request', {});
 
 // ROUTING
 
-ipcRenderer.on('level-parameter-response', displayLevelParams);
+ipcRenderer.on('level-info-response', displayLevelParams);
 
 
 // ROUTING FUNCTIONS
 
 function displayLevelParams(event, res) {
 
-  if (res.briefing) {
-    document.getElementById('briefing').innerText = res.briefing;
+  let briefingOutput = document.getElementById('briefing');
+
+  if (res.level && res.level.briefing) {
+    briefingOutput.innerText = res.level.briefing;
   } else {
-    document.getElementById('initial-time').innerText = formatTime(res.time);
-    document.getElementById('initial-attempts').innerText = res.attempts;
+    briefingOutput.innerText = "Briefing unavailable.";
+
+    // disable mission start button
+    document.getElementById('btn-start').disabled = true;
   }
 }
