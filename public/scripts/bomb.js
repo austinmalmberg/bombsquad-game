@@ -130,25 +130,25 @@ function handleInput(btn) {
 
 // LOCAL FUNCTIONS
 
-function flashHints([ inCode, inPosition ]) {
+function flashHints([ inPosition, inCode ]) {
 
   // timed animation
   // green numbers are in the correct position
   // blue numbers are in the code, but not in the correct position
-
-  for (let i of inCode) {
-    let btn = keyMap.get(i);
-    btn.classList.add('in--code');
-    hintTimers.push(
-      setTimeout(() => btn.classList.remove('in--code'), FLASH_DURATION)
-    );
-  }
 
   for (let i of inPosition) {
     let btn = keyMap.get(i);
     btn.classList.add('in--position');
     hintTimers.push(
       setTimeout(() => btn.classList.remove('in--position'), FLASH_DURATION)
+    );
+  }
+
+  for (let i of inCode) {
+    let btn = keyMap.get(i);
+    btn.classList.add('in--code');
+    hintTimers.push(
+      setTimeout(() => btn.classList.remove('in--code'), FLASH_DURATION)
     );
   }
 }

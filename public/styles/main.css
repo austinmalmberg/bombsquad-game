@@ -88,11 +88,11 @@ p {
 } */
 
 .in--position {
-  color: blue;
+  color: green;
 }
 
 .in--code {
-  color: green;
+  color: blue;
 }
 
 .danger {
